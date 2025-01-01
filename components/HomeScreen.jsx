@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import HomeHeader from './Home/HomeHeader';
 import Feather from '@expo/vector-icons/Feather';
-import DatePicker from 'react-native-date-ranges';
 import DateRangePicker from './Home/CalendarComp';
 
 
@@ -125,25 +124,3 @@ const styles = StyleSheet.create({
     borderColor: "transparent"
   }
 })
-
-const NewPicker = (props) => {
-  const pickerRef = useRef(null);
-
-  const customButton = (onConfirm) => (
-    <Button
-      onPress={onConfirm}
-      style={{ container: { width: '80%', marginHorizontal: '3%' }, text: { fontSize: 20 } }}
-      primary
-      text={'Submit'}
-      title='Submit'
-    />
-  );
-
-  return (
-    <DatePicker
-      ref={pickerRef}
-      {...props}
-      customButton={customButton}
-    />
-  );
-};
