@@ -5,6 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import HomeHeader from './Home/HomeHeader';
 import Feather from '@expo/vector-icons/Feather';
 import DateRangePicker from './Home/CalendarComp';
+import { commonStyles } from '../assets/Styles/constants';
 
 
 const HomeScreen = () => {
@@ -62,7 +63,11 @@ const HomeScreen = () => {
           {/* Destination */}
           <Pressable style={styles.pressableStyle}>
             <Feather name="search" size={24} color="black" />
-            <TextInput placeholder='Enter your Destination' />
+            <TextInput 
+              style={styles.placeholderStyling} 
+              placeholder='Enter your Destination' 
+              underlineColorAndroid="transparent"
+            />
           </Pressable>
 
           {/* Selected Dates */}
@@ -79,8 +84,13 @@ const HomeScreen = () => {
           </Pressable>
 
           {/* Rooms and Guests */}
-          <Pressable>
-
+          <Pressable style={styles.pressableStyle} >
+          <Ionicons name="person-outline" size={24} color="black" />
+          <TextInput 
+              style={styles.placeholderStyling} 
+              placeholder='1 room . 2 adults . 0 children' 
+              underlineColorAndroid="transparent"
+            />
           </Pressable>
 
           {/* Search Button */}
@@ -112,7 +122,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderColor: "#FFC72C",
     borderWidth: 2,
-    paddingRight: 15
+    paddingVertical: 15,
+    height: 30,
   },
   dateText: {
     fontSize: 15,
@@ -125,5 +136,16 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 0,
     borderColor: "transparent"
+  },
+  placeholderStyling: {
+    color: commonStyles.backgroundBlue,
+    fontWeight: "bold",
+    fontSize: 15,
+    marginLeft: 15,
+    borderWidth: 0,
+    width: "auto",
+    borderColor: "transparent",
+    borderWidth: 0,
+    padding: 5
   }
 })
