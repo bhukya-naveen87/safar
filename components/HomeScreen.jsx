@@ -18,6 +18,7 @@ const HomeScreen = () => {
     startDate: null,
     endDate: null,
   });
+  const [isModalVisible, setModalVisible] = useState(false);
   // useEffect(()=>{
   //   console.log(selectedRange)
   //   console.log(finalRange)
@@ -65,13 +66,15 @@ const HomeScreen = () => {
           </Pressable>
 
           {/* Selected Dates */}
-          <Pressable style={styles.pressableStyle}>
+          <Pressable style={styles.pressableStyle} onPress={()=> setModalVisible(true)}>
             <Feather name="calendar" size={24} color="black" />
             <DateRangePicker 
               selectedRange={selectedRange} 
               setSelectedRange={setSelectedRange} 
               finalRange={finalRange} 
               setFinalRange={setFinalRange}
+              isModalVisible={isModalVisible}
+              setModalVisible={setModalVisible}
             />
           </Pressable>
 

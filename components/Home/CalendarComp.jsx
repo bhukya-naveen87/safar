@@ -3,8 +3,7 @@ import { Modal, Pressable, StyleSheet, Text, View, Button } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { commonStyles } from '../../assets/Styles/constants';
 
-const DateRangePickerModal = ({ selectedRange, setSelectedRange, finalRange, setFinalRange }) => {
-    const [isModalVisible, setModalVisible] = useState(false);
+const DateRangePickerModal = ({ selectedRange, setSelectedRange, finalRange, setFinalRange, isModalVisible, setModalVisible }) => {
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
         setSelectedRange(finalRange)
@@ -96,9 +95,9 @@ const DateRangePickerModal = ({ selectedRange, setSelectedRange, finalRange, set
                         <View style={styles.buttonContainer}>
                             <Button title="Confirm" color={commonStyles.backgroundBlue} onPress={confirmSelection} />
                             <Button title="Close" color="red" onPress={toggleModal} />
-                            {
+                            {/* {
                                 selectedRange.startDate && selectedRange.endDate && <Button title="Clear" color="red" onPress={clearSelection} />
-                            }
+                            } */}
                         </View>
                     </View>
                 </View>
