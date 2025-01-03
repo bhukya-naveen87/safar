@@ -1,4 +1,4 @@
-import { Button, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native'
+import { Button, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -6,6 +6,7 @@ import HomeHeader from './Home/HomeHeader';
 import Feather from '@expo/vector-icons/Feather';
 import DateRangePicker from './Home/CalendarComp';
 import { commonStyles } from '../assets/Styles/constants';
+import { BottomModal, ModalButton, ModalContent, ModalFooter, ModalTitle, SlideAnimation } from 'react-native-modals';
 
 
 const HomeScreen = () => {
@@ -19,7 +20,9 @@ const HomeScreen = () => {
     startDate: null,
     endDate: null,
   });
+  const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+
   // useEffect(()=>{
   //   console.log(selectedRange)
   //   console.log(finalRange)
@@ -56,50 +59,78 @@ const HomeScreen = () => {
     )
   }
   return (
-    <View>
-      <HomeHeader />
-      <ScrollView>
-        <View style={styles.viewContainer}>
-          {/* Destination */}
-          <Pressable style={styles.pressableStyle}>
-            <Feather name="search" size={24} color="black" />
-            <TextInput 
-              style={styles.placeholderStyling} 
-              placeholder='Enter your Destination' 
-              underlineColorAndroid="transparent"
-            />
-          </Pressable>
+    <>
+      <View>
+        <HomeHeader />
+        <ScrollView>
+          <View style={styles.viewContainer}>
+            {/* Destination */}
+            <Pressable style={styles.pressableStyle}>
+              <Feather name="search" size={24} color="black" />
+              <TextInput
+                style={styles.placeholderStyling}
+                placeholder='Enter your Destination'
+                underlineColorAndroid="transparent"
+                placeholderTextColor={commonStyles.backgroundBlue}
+              />
+            </Pressable>
 
-          {/* Selected Dates */}
-          <Pressable style={styles.pressableStyle} onPress={()=> setModalVisible(true)}>
-            <Feather name="calendar" size={24} color="black" />
-            <DateRangePicker 
-              selectedRange={selectedRange} 
-              setSelectedRange={setSelectedRange} 
-              finalRange={finalRange} 
-              setFinalRange={setFinalRange}
-              isModalVisible={isModalVisible}
-              setModalVisible={setModalVisible}
-            />
-          </Pressable>
+            {/* Selected Dates */}
+            <Pressable style={styles.pressableStyle} onPress={() => setCalendarModalVisible(true)}>
+              <Feather name="calendar" size={24} color="black" />
+              <DateRangePicker
+                selectedRange={selectedRange}
+                setSelectedRange={setSelectedRange}
+                finalRange={finalRange}
+                setFinalRange={setFinalRange}
+                isCalendarModalVisible={isCalendarModalVisible}
+                setCalendarModalVisible={setCalendarModalVisible}
+              />
+            </Pressable>
 
-          {/* Rooms and Guests */}
-          <Pressable style={styles.pressableStyle} >
-          <Ionicons name="person-outline" size={24} color="black" />
-          <TextInput 
-              style={styles.placeholderStyling} 
-              placeholder='1 room . 2 adults . 0 children' 
-              underlineColorAndroid="transparent"
-            />
-          </Pressable>
+            {/* Rooms and Guests */}
+            <Pressable style={styles.pressableStyle} 
+            onPress={() => setModalVisible(!isModalVisible)}
+            >
+              <Ionicons name="person-outline" size={24} color="black" />
+              <TextInput
+                style={styles.placeholderStyling}
+                placeholder='1 room . 2 adults . 0 children'
+                underlineColorAndroid="transparent"
+                placeholderTextColor={commonStyles.backgroundBlue}
+              />
+            </Pressable>
 
-          {/* Search Button */}
-          <Pressable>
+            {/* Search Button */}
+            <Pressable style={styles.searchStyling} >
+              <Text style={{ textAlign: 'center', fontSize: 15, color: "white", fontWeight: "bold", textAlignVertical: "center" }}>Search</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
+      </View>
 
-          </Pressable>
-        </View>
-      </ScrollView>
-    </View>
+      <BottomModal
+        swipeThreshold={200}
+        onBackdropPress={() => setModalVisible(!isModalVisible)}
+        swipeDirection={["up", "down"]}
+        footer={<ModalFooter>
+          <ModalButton text='Apply' style={{ marginBottom: 20, color: "white", backgroundColor: commonStyles.backgroundBlue }} onPress={() => setModalVisible(!isModalVisible)} />
+        </ModalFooter>}
+        modalTitle={<ModalTitle title='Select Rooms and Guests' />}
+        modalAnimation={new SlideAnimation({
+          slideFrom: "bottom"
+        })}
+        onHardwareBackPress={() => setModalVisible(!isModalVisible)}
+        visible={isModalVisible}
+        onTouchOutside={() => setModalVisible(!isModalVisible)}
+      >
+        <ModalContent style={{width: "100%", height: 310}}>
+            <View>
+              <Text>Modal Content</Text>
+            </View>
+        </ModalContent>
+      </BottomModal>
+    </>
   )
 }
 
@@ -138,14 +169,23 @@ const styles = StyleSheet.create({
     borderColor: "transparent"
   },
   placeholderStyling: {
-    color: commonStyles.backgroundBlue,
+    color: "black",
     fontWeight: "bold",
     fontSize: 15,
-    marginLeft: 15,
+    marginLeft: 11,
     borderWidth: 0,
     width: "auto",
     borderColor: "transparent",
     borderWidth: 0,
-    padding: 5
+    padding: 5,
+    outlineStyle: "none",
+    width: "100%",
+  },
+  searchStyling: {
+    backgroundColor: commonStyles.backgroundBlue,
+    paddingHorizontal: 10,
+    borderColor: "#2a52be",
+    borderWidth: 2,
+    paddingVertical: 15
   }
 })
